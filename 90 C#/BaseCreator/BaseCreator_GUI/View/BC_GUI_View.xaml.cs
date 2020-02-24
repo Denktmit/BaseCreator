@@ -10,15 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BaseCreator_GUI {
+namespace BaseCreator_GUI.View {
   /// <summary>
-  /// Interaktionslogik für MainWindow.xaml
+  /// Interaktionslogik für BC_GUI_View.xaml
   /// </summary>
-  public partial class MainWindow : Window {
-    public MainWindow() {
+  public partial class BC_GUI_View : Window {
+    public BC_GUI_View() {
       InitializeComponent();
     }
   }

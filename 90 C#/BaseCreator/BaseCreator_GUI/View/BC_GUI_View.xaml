@@ -1,0 +1,409 @@
+﻿<Window x:Class="BaseCreator_GUI.View.BC_GUI_View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BaseCreator_GUI.View"
+        xmlns:helper="clr-namespace:BaseCreator_GUI.Helper"
+        xmlns:vms="clr-namespace:BaseCreator_GUI.ViewModel"
+        mc:Ignorable="d"
+        Title="BaseCreator v0.1"
+        Icon="/BaseCreator_GUI;component/resources/png/csv.png"
+        Cursor="/BaseCreator_GUI;component/resources/cursors/Xcape.ani"
+        helper:WindowClosingBehavior.Closing="{Binding CmdCloseProgram}"
+        WindowStartupLocation="CenterScreen"
+        Height="450" MinHeight="450"
+        Width="800"  MinWidth="800">
+  <Window.DataContext>
+    <vms:BC_GUI_ViewModel/>
+  </Window.DataContext>
+  <Window.Resources>
+    <helper:InverseBooleanConverter x:Key="ibc"/>
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    <Style TargetType="GridSplitter">
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="Background" Value="LightGray"/>
+      <Setter Property="Margin" Value="3"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="s_header">
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="FontWeight" Value="DemiBold"/>
+    </Style>
+    <Style TargetType="TabItem">
+      <Setter Property="Width" Value="75"/>
+    </Style>
+    <Style TargetType="DockPanel" x:Key="s_files_dp">
+      <Setter Property="Margin" Value="0,0,0,5"/>
+    </Style>
+    <Style TargetType="Grid" x:Key="s_files_grid">
+      <Setter Property="Margin" Value="0,0,0,5"/>
+    </Style>
+    <Style TargetType="Button" x:Key="s_PrintButton">
+      <Setter Property="ToolTip" Value="Drucken"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Content">
+        <Setter.Value>
+          <Image Source="/BaseCreator_GUI;component/resources/png/print.png"/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="s_RefreshButton">
+      <Setter Property="ToolTip" Value="Neu laden"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Command" Value="{Binding CmdRefresh}"/>
+      <Setter Property="Content">
+        <Setter.Value>
+          <Image Source="/BaseCreator_GUI;component/resources/png/refresh.png"/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="s_EraseButton">
+      <Setter Property="ToolTip" Value="Loeschen"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Content">
+        <Setter.Value>
+          <Image Source="/BaseCreator_GUI;component/resources/png/stornieren_3.png"/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="s_CreateButton">
+      <Setter Property="ToolTip" Value="Erstellen"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Content">
+        <Setter.Value>
+          <Image Source="/BaseCreator_GUI;component/resources/png/add.png"/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="s_SaveButton">
+      <Setter Property="ToolTip" Value="Speichern"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Command" Value="{Binding CmdSave}"/>
+      <Setter Property="Content">
+        <Setter.Value>
+          <Image Source="/BaseCreator_GUI;component/resources/png/save.png"/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="s_Kontrollleiste_Border">
+      <Setter Property="BorderBrush" Value="Black"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="5"/>
+      <Setter Property="DockPanel.Dock" Value="Top"/>
+      <Setter Property="Background" Value="DarkGray"/>
+      <Setter Property="Margin" Value="0,0,0,5"/>
+      <Setter Property="Padding" Value="5"/>
+    </Style>
+  </Window.Resources>
+  <Grid Background="Gray">
+    <TabControl Background="Transparent" BorderThickness="0,2,0,0" BorderBrush="DimGray">
+      <TabItem Header="Start">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <DockPanel Grid.Column="1" Grid.Row="1">
+            <Button DockPanel.Dock="Bottom" Content="DEBUG" Command="{Binding CmdDebug}"/>
+            <TextBlock DockPanel.Dock="Bottom" Text="BaseCreator" HorizontalAlignment="Center"
+                       FontSize="16" FontWeight="Bold"/>
+            <Image Source="/BaseCreator_GUI;component/resources/png/csv.png" Grid.Column="1" Grid.Row="1"
+                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+          </DockPanel>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Create">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="25"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="200" MinWidth="25"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <DockPanel Grid.Column="0">
+            <TextBlock DockPanel.Dock="Top" Text="Files" Style="{StaticResource s_header}"/>
+            <ItemsControl ItemsSource="{Binding Files}" Background="Wheat">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Darstellung}"
+                            IsEnabled="{Binding Dirty,Converter={StaticResource ibc}}"
+                            HorizontalAlignment="Stretch"/>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </DockPanel>
+          <GridSplitter Grid.Column="1"/>
+          <TextBlock Grid.Column="2" Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"
+                     FontSize="16" FontWeight="Black"/>
+          <DockPanel Grid.Column="3">
+            <TextBlock DockPanel.Dock="Top" Text="Templates" Style="{StaticResource s_header}"/>
+            <ItemsControl ItemsSource="{Binding Templates}" Background="Wheat">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Darstellung}"
+                            IsEnabled="{Binding Dirty,Converter={StaticResource ibc}}"
+                            HorizontalAlignment="Stretch"/>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </DockPanel>
+          <GridSplitter Grid.Column="4"/>
+          <Button Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0"
+                  Content="Erstellen" Width="100" Height="50" FontSize="14" FontWeight="DemiBold"
+                  Command="{Binding CmdCreateResults}"/>
+          <Button Grid.Column="5" Style="{StaticResource s_RefreshButton}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Files" IsSelected="True">
+        <DockPanel>
+          <!-- Kontrollleiste -->
+          <Border Style="{StaticResource s_Kontrollleiste_Border}">
+            <DockPanel Name="x_kontrolleiste">
+              <Button DockPanel.Dock="Left" Content="Import" Command="{Binding CmdImport}"
+                      Width="100" ToolTip="Imports a file" Margin="0,0,10,0"/>
+              <TextBox DockPanel.Dock="Left" Text="{Binding NewDateiPfad}" Width="400" VerticalContentAlignment="Center"/>
+              <Button DockPanel.Dock="Left" Content="..." Command="{Binding CmdSelectFile}" Width="20"/>
+              <Button DockPanel.Dock="Right" Command="{Binding CmdSaveChanges}" Style="{StaticResource s_SaveButton}" Margin="5,0,0,0"/>
+              <Button DockPanel.Dock="Right" Style="{StaticResource s_RefreshButton}"/>
+              <Grid/>
+            </DockPanel>
+          </Border>
+          <!-- Content -->
+          <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="x_content_sv">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding ElementName=x_content_sv, Path=ActualHeight}"/>
+              </Grid.RowDefinitions>
+              <Grid.Resources>
+                <Style TargetType="GridSplitter">
+                  <Setter Property="Background" Value="LightGray"/>
+                  <Setter Property="VerticalAlignment" Value="Stretch"/>
+                  <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                  <Setter Property="Margin" Value="0,19,0,5"/>
+                </Style>
+              </Grid.Resources>
+              <!-- Files -->
+              <DockPanel Grid.Column="0" Style="{StaticResource s_files_dp}">
+                <TextBlock DockPanel.Dock="Top" Text="Files" Style="{StaticResource s_header}"/>
+                <StackPanel DockPanel.Dock="Bottom">
+                  <TextBox Text="{Binding NewFileName}"/>
+                  <Button Command="{Binding CmdCreateFile}" Content="Neu"/>
+                  <Button Command="{Binding CmdDeleteFile}" Content="Löschen"/>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                  <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
+                         DisplayMemberPath="ExtendedDarstellung"/>
+                </ScrollViewer>
+              </DockPanel>
+              <GridSplitter Grid.Column="1"/>
+              <!-- DB´s -->
+              <DockPanel Grid.Column="2" Style="{StaticResource s_files_dp}">
+                <TextBlock DockPanel.Dock="Top" Text="DB's" Style="{StaticResource s_header}"/>
+                <StackPanel DockPanel.Dock="Bottom">
+                  <TextBox Text="{Binding NewDBName, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"/>
+                  <Button Command="{Binding CmdCreateDatabase}" Content="Neu"/>
+                  <Button Command="{Binding CmdDeleteDatabase}" Content="Löschen"/>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                  <ListBox ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}"
+                         DisplayMemberPath="ExtendedDarstellung"/>
+                </ScrollViewer>
+              </DockPanel>
+              <GridSplitter Grid.Column="3"/>
+              <!-- Tabellen -->
+              <Grid Grid.Column="4" Style="{StaticResource s_files_grid}">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Tabellen" Style="{StaticResource s_header}"/>
+                <StackPanel Grid.Row="2">
+                  <TextBox Text="{Binding NewTableName}"/>
+                  <Button Command="{Binding CmdCreateTable}" Content="Neu"/>
+                  <Button Command="{Binding CmdDeleteTable}" Content="Löschen"/>
+                </StackPanel>
+                <ListView Grid.Row="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
+                          DisplayMemberPath="ExtendedDarstellung"/>
+              </Grid>
+              <GridSplitter Grid.Column="5"/>
+              <!-- Spalten -->
+              <DockPanel Grid.Column="6" Style="{StaticResource s_files_dp}">
+                <TextBlock DockPanel.Dock="Top" Text="Spalten" Style="{StaticResource s_header}"/>
+                <StackPanel DockPanel.Dock="Bottom">
+                  <TextBox Text="{Binding NewColumnName}"/>
+                  <Button Command="{Binding CmdCreateColumn}" Content="Neu"/>
+                  <Button Command="{Binding CmdDeleteColumn}" Content="Löschen"/>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Columns}" SelectedItem="{Binding SelectedColumn}"
+                         DisplayMemberPath="ExtendedDarstellung"/>
+              </DockPanel>
+              <GridSplitter Grid.Column="7"/>
+              <!-- Details -->
+              <Grid Grid.Column="8" Margin="10,20,20,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="100"/>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="22"/>
+                  <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Padding" Value="0"/>
+                  </Style>
+                  <Style TargetType="TextBox">
+                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Padding" Value="0"/>
+                  </Style>
+                  <Style TargetType="ComboBox">
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Padding" Value="5,0,0,0"/>
+                  </Style>
+                  <Style TargetType="CheckBox">
+                    <Setter Property="Margin" Value="0,3,10,0"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  </Style>
+                </Grid.Resources>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="DBName:"/>
+                <TextBox   Grid.Column="1" Grid.Row="0" Text="{Binding SelectedDatabase.Darstellung
+                  , UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Tabellenname:"/>
+                <TextBox   Grid.Column="1" Grid.Row="1" Text="{Binding SelectedTable.Darstellung}"/>
+                <DockPanel Grid.Column="1" Grid.Row="2">
+                  <TextBox DockPanel.Dock="Right" Text="{Binding SelectedTable.Kuerzel}" Width="100"/>
+                  <TextBlock DockPanel.Dock="Right" Text="Kürzel:" Margin="0,0,10,0"/>
+                  <Grid/>
+                </DockPanel>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Spaltenname:"/>
+                <TextBox   Grid.Column="1" Grid.Row="3" Text="{Binding SelectedColumn.Darstellung}"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Typ:"/>
+                <ComboBox  Grid.Column="1" Grid.Row="4" DisplayMemberPath="Darstellung"
+                           ItemsSource="{Binding DataTypes}" SelectedItem="{Binding SelectedColumn.DataType}"/>
+                <TextBlock  Grid.Column="0" Grid.Row="5" Text="Verweis:" Visibility="{Binding SelectedColumn.References,Converter={StaticResource BoolToVis}}" VerticalAlignment="Top"/>
+                <StackPanel Grid.Column="1" Grid.Row="5" Visibility="{Binding SelectedColumn.References,Converter={StaticResource BoolToVis}}">
+                  <ComboBox DisplayMemberPath="Darstellung" ItemsSource="{Binding Databases}" SelectedItem="{Binding VerwDB}"/>
+                  <ComboBox DisplayMemberPath="Darstellung" ItemsSource="{Binding VerwDB.Tables}" SelectedItem="{Binding SelectedColumn.Reference}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="0" Grid.Row="6" Text="Default:"/>
+                <TextBox   Grid.Column="1" Grid.Row="6" Text="{Binding SelectedColumn.Default}"/>
+                <WrapPanel Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal">
+                  <CheckBox Content="NotNull" IsChecked="{Binding SelectedColumn.NotNull}"/>
+                  <CheckBox Content="AutoIncrement" IsChecked="{Binding SelectedColumn.AutoIncrement}"/>
+                  <CheckBox Content="PrimaryKey" IsChecked="{Binding SelectedColumn.PrimaryKey}"/>
+                </WrapPanel>
+                <TextBlock Grid.Column="0" Grid.Row="8" Text="Unique-Gruppe:"/>
+                <TextBox   Grid.Column="1" Grid.Row="8" Text="{Binding SelectedColumn.MakeUnique}" Width="20" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="0" Grid.Row="9" Text="Kommentar:"/>
+                <TextBox   Grid.Column="1" Grid.Row="9" Grid.RowSpan="3" VerticalAlignment="Stretch" Height="62"
+                           Text="{Binding SelectedColumn.Kommentar}" TextAlignment="Left" VerticalContentAlignment="Top"
+                           AcceptsReturn="False" AcceptsTab="True" TextWrapping="Wrap"/>
+              </Grid>
+            </Grid>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="Templates">
+        <DockPanel>
+          <!-- Kontrollleiste -->
+          <Border Style="{StaticResource s_Kontrollleiste_Border}">
+            <DockPanel>
+              <DockPanel.Resources>
+                <Style TargetType="ComboBox">
+                  <Setter Property="Height" Value="20"/>
+                  <Setter Property="VerticalAlignment" Value="Center"/>
+                  <Setter Property="VerticalContentAlignment" Value="Center"/>
+                  <Setter Property="Margin" Value="0,0,0,0"/>
+                  <Setter Property="Padding" Value="0"/>
+                </Style>
+              </DockPanel.Resources>
+              <TextBlock DockPanel.Dock="Left" Text="Template:" Margin="0,0,10,0" VerticalAlignment="Center"
+                         Style="{StaticResource s_header}"/>
+              <ComboBox DockPanel.Dock="Left" Width="200" Padding="3,0,0,0"
+                        ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}"
+                        DisplayMemberPath="ExtendedDarstellung"/>
+              <Button DockPanel.Dock="Right" Style="{StaticResource s_RefreshButton}"/>
+              <Button DockPanel.Dock="Right" Style="{StaticResource s_SaveButton}" Command="{Binding CmdSaveTemplate}"/>
+              <Button DockPanel.Dock="Right" Style="{StaticResource s_CreateButton}" Command="{Binding CmdCreateTemplate}"/>
+              <Button DockPanel.Dock="Right" Style="{StaticResource s_EraseButton}" Command="{Binding CmdDeleteTemplate}"/>
+              <Grid/>
+            </DockPanel>
+          </Border>
+          <!-- Content -->
+          <WrapPanel DockPanel.Dock="Top">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,20,0">
+              <TextBlock Text="Name:" FontWeight="DemiBold" Width="40" VerticalAlignment="Center"/>
+              <TextBox Text="{Binding SelectedTemplate.Bezeichnung}" Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,20,0">
+              <TextBlock Text="Ziel:" FontWeight="DemiBold" Width="30" VerticalAlignment="Center"/>
+              <ComboBox ItemsSource="{Binding TemplateTargets}" SelectedItem="{Binding SelectedTemplate.Target}"
+                      DisplayMemberPath="Darstellung" Width="100"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,20,0">
+              <TextBlock Text="Dateiname:" FontWeight="DemiBold" Width="70" VerticalAlignment="Center"/>
+              <TextBox Text="{Binding SelectedTemplate.Dateiname}" Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+          </WrapPanel>
+          <TextBox Text="{Binding SelectedTemplate.Content}" AcceptsReturn="True" AcceptsTab="True"
+                   Margin="5" TextWrapping="Wrap" FontFamily="Courier New" VerticalScrollBarVisibility="Auto"/>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="AP">
+        
+      </TabItem>
+    </TabControl>
+  </Grid>
+</Window>

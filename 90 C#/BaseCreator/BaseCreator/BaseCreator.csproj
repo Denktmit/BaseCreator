@@ -55,9 +55,12 @@
       <Name>BaseCreator_Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
-copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"</PostBuildEvent>
+copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"
+copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"
+copy /N "$(TargetDir)$(TargetFileName).config" "D:\Playground\BaseCreator\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

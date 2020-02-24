@@ -55,18 +55,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Helper\BusyManager.cs" />
+    <Compile Include="Helper\Commands\WPFCommand.cs" />
+    <Compile Include="Helper\Commands\WPFCommandBool.cs" />
+    <Compile Include="Helper\Commands\WPFCommandDateTime.cs" />
+    <Compile Include="Helper\Commands\WPFCommandDouble.cs" />
+    <Compile Include="Helper\Commands\WPFCommandInt.cs" />
+    <Compile Include="Helper\Commands\WPFCommandObject.cs" />
+    <Compile Include="Helper\Commands\WPFCommandString.cs" />
+    <Compile Include="Helper\Commands\WPFCommandType.cs" />
+    <Compile Include="Helper\Commands\WPFCommandVoid.cs" />
+    <Compile Include="Helper\Commands\WPFCommandWindow.cs" />
+    <Compile Include="Helper\InverseBooleanConverter.cs" />
+    <Compile Include="Helper\WindowClosingBehavior.cs" />
+    <Compile Include="ViewModel\BC_GUI_ViewModel.cs" />
+    <Compile Include="View\BC_GUI_View.xaml.cs">
+      <DependentUpon>BC_GUI_View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="View\BC_GUI_View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,19 +103,54 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="resources\cursors\Xcape.ani">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AP_Extension\AP_Extension.csproj">
+      <Project>{1fa97067-c7ed-40d4-aa66-885b7cc5b0ec}</Project>
+      <Name>AP_Extension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BaseCreator_Core\BaseCreator_Core.csproj">
       <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
       <Name>BaseCreator_Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="resources\icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\png\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\png\csv.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\png\refresh.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\png\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\png\stornieren_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\png\print.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
-copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"</PostBuildEvent>
+copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"
+copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"
+copy /N "$(TargetDir)$(TargetFileName).config" "D:\Playground\BaseCreator\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

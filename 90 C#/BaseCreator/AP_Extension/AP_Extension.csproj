@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BEAD612-8342-47D0-95FF-3FADF19160EC}</ProjectGuid>
+    <ProjectGuid>{1FA97067-C7ED-40D4-AA66-885B7CC5B0EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BaseCreator_Core</RootNamespace>
-    <AssemblyName>BaseCreator_Core</AssemblyName>
+    <RootNamespace>AP_Extension</RootNamespace>
+    <AssemblyName>AP_Extension</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,34 +41,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Creator.cs" />
-    <Compile Include="Core\Interpreter.cs" />
-    <Compile Include="Core\Step.cs" />
-    <Compile Include="Core\Tags\fe_Tag.cs" />
-    <Compile Include="Core\Tags\_Tag.cs" />
-    <Compile Include="Helper\Configurations.cs" />
-    <Compile Include="Helper\CSVImport.cs" />
-    <Compile Include="Helper\Debugger.cs" />
-    <Compile Include="Helper\ErrorException.cs" />
-    <Compile Include="Helper\ErrorHandler.cs" />
-    <Compile Include="Helper\Extensions.cs" />
-    <Compile Include="Helper\FileManager.cs" />
-    <Compile Include="Helper\FileWriter.cs" />
-    <Compile Include="Helper\Miscellaneous.cs" />
-    <Compile Include="Helper\ModelBase.cs" />
-    <Compile Include="Helper\Properties.cs" />
-    <Compile Include="Model\BCColumn.cs" />
-    <Compile Include="Model\BCDatabase.cs" />
-    <Compile Include="Model\BCFile.cs" />
-    <Compile Include="Model\BCTable.cs" />
-    <Compile Include="Model\BCTemplate.cs" />
-    <Compile Include="Core\BC_Core.cs" />
-    <Compile Include="Model\DataType.cs" />
-    <Compile Include="Model\TemplateTarget.cs" />
-    <Compile Include="Model\_BCClass.cs" />
+    <Compile Include="AP\AutoCreator.cs" />
+    <Compile Include="AP\CDH.cs" />
+    <Compile Include="AP\Creator_CS.cs" />
+    <Compile Include="AP\Creator_HTML.cs" />
+    <Compile Include="AP\Creator_PHP.cs" />
+    <Compile Include="AP\Creator_RandDS.cs" />
+    <Compile Include="AP\Creator_SQL.cs" />
+    <Compile Include="AP\CSVEnum.cs" />
+    <Compile Include="AP\CSVEnumElement.cs" />
+    <Compile Include="AP\CSV_Spalte.cs" />
+    <Compile Include="AP\CSV_Tabelle.cs" />
+    <Compile Include="AP\DBType.cs" />
+    <Compile Include="AP\SQLDependencies.cs" />
+    <Compile Include="AP\SQLScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BaseCreator_Core\BaseCreator_Core.csproj">
+      <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
+      <Name>BaseCreator_Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
