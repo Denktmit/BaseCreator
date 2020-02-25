@@ -2,7 +2,7 @@
 using System.Security;
 using System.Configuration;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public static class Configurations {
 

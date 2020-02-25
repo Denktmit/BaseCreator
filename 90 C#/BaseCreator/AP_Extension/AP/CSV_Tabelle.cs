@@ -25,7 +25,10 @@ namespace AP_Extension.AP {
     public bool IsSys { get { return _isSys; } set { _isSys = value; } }
     public bool ReferencesItself { get { return _refItself; } set { _refItself = value; } }
     public bool HasSysTextReference { get { return CheckForSysTextReference(); } }
-    public List<CSV_Spalte> Columns { get => m_Columns; set => m_Columns = value; }
+    public List<CSV_Spalte> Columns {
+      get { return m_Columns; }
+      set { m_Columns = value; }
+    }
     public int ClassDependency { get { return _classDependency; } set { _classDependency = value; } }
     #endregion Properties
 

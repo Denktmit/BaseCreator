@@ -46,17 +46,7 @@
     <Compile Include="Core\Step.cs" />
     <Compile Include="Core\Tags\fe_Tag.cs" />
     <Compile Include="Core\Tags\_Tag.cs" />
-    <Compile Include="Helper\Configurations.cs" />
-    <Compile Include="Helper\CSVImport.cs" />
-    <Compile Include="Helper\Debugger.cs" />
-    <Compile Include="Helper\ErrorException.cs" />
-    <Compile Include="Helper\ErrorHandler.cs" />
-    <Compile Include="Helper\Extensions.cs" />
-    <Compile Include="Helper\FileManager.cs" />
-    <Compile Include="Helper\FileWriter.cs" />
-    <Compile Include="Helper\Miscellaneous.cs" />
-    <Compile Include="Helper\ModelBase.cs" />
-    <Compile Include="Helper\Properties.cs" />
+    <Compile Include="Helper\_placeholder.cs" />
     <Compile Include="Model\BCColumn.cs" />
     <Compile Include="Model\BCDatabase.cs" />
     <Compile Include="Model\BCFile.cs" />
@@ -68,10 +58,19 @@
     <Compile Include="Model\_BCClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AP_Extension\AP_Extension.csproj">
+      <Project>{1fa97067-c7ed-40d4-aa66-885b7cc5b0ec}</Project>
+      <Name>AP_Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VDUtils\VDUtils.csproj">
+      <Project>{8c3412c9-56d5-4bd3-b4d8-aa43a43f80e1}</Project>
+      <Name>VDUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
-copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"</PostBuildEvent>
+:: copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

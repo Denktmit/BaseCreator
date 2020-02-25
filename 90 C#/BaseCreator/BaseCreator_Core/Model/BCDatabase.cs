@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Security;
-using BaseCreator_Core.Helper;
+using VDUtils.Helper;
 
 namespace BaseCreator_Core.Model {
 

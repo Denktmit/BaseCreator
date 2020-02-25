@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public class ErrorException : Exception {
 

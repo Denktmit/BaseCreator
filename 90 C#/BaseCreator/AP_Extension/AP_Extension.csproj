@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APAC.cs" />
     <Compile Include="AP\AutoCreator.cs" />
     <Compile Include="AP\CDH.cs" />
     <Compile Include="AP\Creator_CS.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="AP\Creator_SQL.cs" />
     <Compile Include="AP\CSVEnum.cs" />
     <Compile Include="AP\CSVEnumElement.cs" />
+    <Compile Include="AP\CSV_Datenbank.cs" />
     <Compile Include="AP\CSV_Spalte.cs" />
     <Compile Include="AP\CSV_Tabelle.cs" />
     <Compile Include="AP\DBType.cs" />
@@ -58,14 +60,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaseCreator_Core\BaseCreator_Core.csproj">
-      <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
-      <Name>BaseCreator_Core</Name>
+    <ProjectReference Include="..\VDUtils\VDUtils.csproj">
+      <Project>{8c3412c9-56d5-4bd3-b4d8-aa43a43f80e1}</Project>
+      <Name>VDUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
-copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"</PostBuildEvent>
+:: copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

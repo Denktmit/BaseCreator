@@ -2,6 +2,7 @@
 using System.Security;
 using BaseCreator_Core.Core;
 using BaseCreator_Core.Helper;
+using VDUtils.Helper;
 
 namespace BaseCreator_Core.Model {
 
@@ -13,6 +14,7 @@ namespace BaseCreator_Core.Model {
     private string _bezeichnung;
     private string _dateiname;
     private TemplateTarget _target;
+    private bool _hardcoded;
 
     public string Content {
       get { return _content; }
@@ -63,6 +65,10 @@ namespace BaseCreator_Core.Model {
         Dirty = true;
       }
     }
+    public bool Hardcoded {
+      get { return _hardcoded; }
+      set { _hardcoded = value; }
+    }
     #endregion fields and properties
 
     #region ViewModels
@@ -84,6 +90,7 @@ namespace BaseCreator_Core.Model {
       _content = "";
       _bezeichnung = bezeichnung;
       _target = BC_Core.GetTemplateTarget("Keins");
+      _hardcoded = false;
       // set viewmodels
       // load commands
       CreateCommands();

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public static class FileManager {
 

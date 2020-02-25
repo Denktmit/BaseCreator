@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public class FileWriter {
 

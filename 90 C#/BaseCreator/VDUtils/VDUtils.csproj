@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9ECBD0C1-F598-4302-AE19-AC85782C3DC1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>BaseCreator_Console</RootNamespace>
-    <AssemblyName>BaseCreator_Console</AssemblyName>
+    <ProjectGuid>{8C3412C9-56D5-4BD3-B4D8-AA43A43F80E1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VDUtils</RootNamespace>
+    <AssemblyName>VDUtils</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,23 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Helper\Configurations.cs" />
+    <Compile Include="Helper\CSVImport.cs" />
+    <Compile Include="Helper\Debugger.cs" />
+    <Compile Include="Helper\ErrorException.cs" />
+    <Compile Include="Helper\ErrorHandler.cs" />
+    <Compile Include="Helper\Extensions.cs" />
+    <Compile Include="Helper\FileManager.cs" />
+    <Compile Include="Helper\FileWriter.cs" />
+    <Compile Include="Helper\Miscellaneous.cs" />
+    <Compile Include="Helper\ModelBase.cs" />
+    <Compile Include="Helper\Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BaseCreator_Core\BaseCreator_Core.csproj">
-      <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
-      <Name>BaseCreator_Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
-copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"
-:: copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"
-:: copy /N "$(TargetDir)$(TargetFileName).config" "D:\Playground\BaseCreator\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public class Properties {
 

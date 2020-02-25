@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Windows;
+using VDUtils.Helper;
 
 namespace BaseCreator_GUI.ViewModel {
 

@@ -1,44 +1,55 @@
 ﻿using System;
-using System.Security;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using VDUtils.Helper;
 
 namespace AP_Extension.AP {
 
-  public class Creator_RandDS {
+  public class CSV_Datenbank {
 
     #region fields and properties
+    private string _dBName;
+    private List<CSV_Tabelle> _tabellen;
+
+    public string DBName {
+      get { return _dBName; }
+      set { _dBName = value; }
+    }
+    public List<CSV_Tabelle> Tabellen {
+      get {
+        if (_tabellen == null)
+          _tabellen = new List<CSV_Tabelle>();
+        return _tabellen;
+      }
+    }
     #endregion fields and properties
 
     #region ViewModels
     #endregion ViewModels
 
     #region WPFCommands
-
-    private void CreateCommands() {
-
-    }
     #endregion WPFCommands
 
     #region constructors
-    public Creator_RandDS() {
+    public CSV_Datenbank(string name) {
       // set properties
       // set viewmodels
       // load commands
-      CreateCommands();
       // load gui-texts
       // start init
       int init = 0;
       try {
         init = Init();
-        if (init != 0) {
-          throw new VerificationException("Error at creating <Creator_RandDS>. Error:" + init);
-        }
+      } catch (Exception e) {
+        throw e;
       }
-      catch (Exception e) {
-        string className = "Creator_RandDS";
+      if (init != 0) {
+        string className = "CSV_Datenbank";
         string methodName = "Constructor";
-        string errMsg = "Error at constructor of <" + className + ">. Error:" + init;
-        throw ErrorHandler.GetErrorException(e, ErrorType.CreationError, className, methodName, errMsg, "XYZ", true);
+        string errMsg = "Error at constructor of <" + className + ">. Error:" + init + ".";
+        throw ErrorHandler.GetErrorException(ErrorType.CreationError, className, methodName, errMsg, "XYZ", true);
       }
     }
     #endregion constructors

@@ -1,7 +1,6 @@
-﻿using BaseCreator_Core.Helper;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Security;
+using VDUtils.Helper;
 
 namespace AP_Extension.AP {
 
@@ -10,6 +9,7 @@ namespace AP_Extension.AP {
     #region fields
     private List<string> _errors;
     //private DBConnection _conn;
+    private List<CSV_Datenbank> _dbs;
     private List<CSV_Tabelle> _dbTables;
     private List<CSVEnum> _enums;
     private static string _appath;
@@ -19,11 +19,13 @@ namespace AP_Extension.AP {
     private Creator_PHP _cphp;
     private Creator_HTML _chtml;
     private Creator_RandDS _crds;
+    private string _filePath;
     #endregion fields
 
     #region properties
     public List<string> Errors { get { return _errors; } set { _errors = value; } }
     //public DBConnection Conn { get { return _conn; } set { _conn = value; } }
+    public List<CSV_Datenbank> Dbs { get { return _dbs; } set { _dbs = value; } }
     public List<CSV_Tabelle> DbTables { get { return _dbTables; } set { _dbTables = value; } }
     public List<CSVEnum> Enums { get { return _enums; } set { _enums = value; } }
     public string APPath { get { return _appath; } set { _appath = value; } }
@@ -33,6 +35,10 @@ namespace AP_Extension.AP {
     public Creator_PHP CPHP { get { return _cphp; } set { _cphp = value; } }
     public Creator_HTML CHTML { get { return _chtml; } set { _chtml = value; } }
     public Creator_RandDS CRDS { get { return _crds; } set { _crds = value; } }
+    public string FilePath {
+      get { return _filePath; }
+      set { _filePath = value; }
+    }
     #endregion properties
 
     #region konstruktor
@@ -42,9 +48,9 @@ namespace AP_Extension.AP {
       Errors = new List<string>();
       //Conn = GetDefaultDBConn();
       //LoadConnection();
-      DbTables = DListToClassLists(CSVImport.getListList(APPath + "\\00_Documents\\DB-Aufbau", "DB-Tables", ";", true));
-      Enums = DListToCSVEnums(CSVImport.getListList(APPath + "\\00_Documents\\DB-Aufbau", "enums", ";", true));
-      CalculateDependenciesClass();
+      //DbTables = DListToClassLists(CSVImport.getListList(APPath + "\\00_Documents\\DB-Aufbau", "DB-Tables", ";", true));
+      //Enums = DListToCSVEnums(CSVImport.getListList(APPath + "\\00_Documents\\DB-Aufbau", "enums", ";", true));
+      //CalculateDependenciesClass();
     }
     #endregion konstruktor
 
@@ -52,29 +58,64 @@ namespace AP_Extension.AP {
     public void run() {
       CreateSQL();
       CreateCS();
-      //CreatePHP();
-      //CreateHTML();
-      //CreateRandDS();
+      CreatePHP();
+      CreateHTML();
+      CreateRandDS();
     }
-    private void CreateSQL() {
-      CSQL = new Creator_SQL(this);
-      CSQL.run();
+    public bool CreateSQL() {
+      try {
+        CSQL = new Creator_SQL(this);
+        CSQL.run();
+        return true;
+      } catch(Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateSQL"
+          , "Fehler beim Erstellen der SQL-Dateien.", "73");
+        return false;
+      }
     }
-    private void CreateCS() {
-      CCS = new Creator_CS(this);
-      CCS.run();
+    public bool CreateCS() {
+      try {
+        CCS = new Creator_CS(this);
+        CCS.run();
+        return true;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateCS"
+          , "Fehler beim Erstellen der C#-Dateien.", "84");
+        return false;
+      }
     }
-    private void CreatePHP() {
-      CPHP = new Creator_PHP(this);
-      CPHP.run();
+    public bool CreatePHP() {
+      try {
+        CPHP = new Creator_PHP(this);
+        CPHP.run();
+        return true;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreatePHP"
+          , "Fehler beim Erstellen der PHP-Dateien.", "95");
+        return false;
+      }
     }
-    private void CreateHTML() {
-      CHTML = new Creator_HTML(this);
-      CHTML.run();
+    public bool CreateHTML() {
+      try {
+        CHTML = new Creator_HTML(this);
+        CHTML.run();
+        return true;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateHTML"
+          , "Fehler beim Erstellen der SQL-Dateien.", "106");
+        return false;
+      }
     }
-    private void CreateRandDS() {
-      //CRDS = new Creator_RandDS(this);
-      //CRDS.run();
+    public bool CreateRandDS() {
+      try {
+        //CRDS = new Creator_RandDS(this);
+        //CRDS.run();
+        return true;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateRandDS"
+          , "Fehler beim Erstellen der Zufallsdatensätze.", "117");
+        return false;
+      }
     }
     #endregion class_methods
 
@@ -327,6 +368,42 @@ namespace AP_Extension.AP {
       }
       Console.WriteLine("Debug");
     }
+    public CSV_Datenbank GetDatenbank(string dbname, bool createIfNull) {
+      foreach (CSV_Datenbank db in Dbs) {
+        if (db.DBName == dbname)
+          return db;
+      }
+      if (createIfNull) {
+        CSV_Datenbank ndb = new CSV_Datenbank(dbname);
+        Dbs.Add(ndb);
+        return ndb;
+      }
+      return null;
+    }
+    public CSV_Tabelle GetTabelle(CSV_Datenbank db, string tabname, string tabtoken = "nA", bool createIfNull) {
+      foreach (CSV_Tabelle tab in db.Tabellen) {
+        if (tab.DataName == tabname)
+          return tab;
+      }
+      if (createIfNull) {
+        CSV_Tabelle ntab = new CSV_Tabelle(tabname, tabtoken);
+        db.Tabellen.Add(ntab);
+        return ntab;
+      }
+      return null;
+    }
+    public CSV_Spalte GetSpalte(CSV_Tabelle tab, string spaltenname, bool createIfNull) {
+      foreach (CSV_Spalte col in tab.Columns) {
+        if (col.Attribut == spaltenname)
+          return col;
+      }
+      if (createIfNull) {
+        CSV_Spalte ncol = new CSV_Spalte(-1, null, null, null, null, false, false, false, null, null, null, null, null, null, null);
+        tab.Columns.Add(ncol);
+        return ncol;
+      }
+      return null;
+    }
     #endregion Helper_methods
 
     #region converter_methods
@@ -462,8 +539,7 @@ namespace AP_Extension.AP {
         string tableKrz = dList[anf][1];
         if (uniqueKuerzel.Contains(tableKrz)) {
           throw new Exception("! Das Tabellenkuerzel <" + tableKrz + "> existiert bereits. Passe die CSV-Datei an!");
-        }
-        else {
+        } else {
           uniqueKuerzel.Add(tableKrz);
         }
         CSV_Tabelle tempTable = new CSV_Tabelle(dataName, tableKrz);
@@ -530,6 +606,36 @@ namespace AP_Extension.AP {
         //Console.WriteLine(e.ToString());
       }
       return ret;
+    }
+    public List<CSV_Tabelle> BCListToClassLists(List<List<string>> dList) {
+      Console.WriteLine("-------------------------");
+      Console.WriteLine(" + BCListToClassLists(...)");
+      Dbs = new List<CSV_Datenbank>();
+      DbTables = new List<CSV_Tabelle>();
+      List<string> uniqueKuerzel = new List<string>();
+      // CSV-Tabelle einlesen
+      if (dList == null) {
+        string errorMsg = "! ERROR@DListToClassLists -> Uebergebene Liste war null.";
+        Console.WriteLine(errorMsg);
+        throw new Exception(errorMsg);
+      }
+      if (dList.Count <= 0) {
+        string errMsg = "! ERROR@DListToClassLists -> Uebergebene Liste war leer.";
+        Console.WriteLine(errMsg);
+        throw new Exception(errMsg);
+      }
+      // Tabellen durchlaufen
+
+
+
+      // ...
+
+      
+      return DbTables;
+    }
+    public void ImportData(List<List<string>> data, string filePath) {
+      FilePath = filePath;
+      DbTables = BCListToClassLists(data);
     }
     #endregion converter_methods
 

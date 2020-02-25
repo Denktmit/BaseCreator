@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   public class ModelBase : INotifyPropertyChanged {
 

@@ -3,9 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
-  static class Extensions {
+  public static class Extensions {
 
     public static void Sort<T>(this ObservableCollection<T> collection) where T : IComparable {
       List<T> sorted = collection.OrderBy(x => x).ToList();

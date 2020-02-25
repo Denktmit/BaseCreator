@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BaseCreator_Core.Model;
 using BaseCreator_Core.Helper;
+using AP_Extension;
+using VDUtils.Helper;
 
 namespace BaseCreator_Core.Core {
 
@@ -86,6 +88,31 @@ namespace BaseCreator_Core.Core {
           , "Das Template konnte nicht geladen werden.", "77");
         }
       }
+      BCTemplate tsql = new BCTemplate("AP-SQL");
+      tsql.IsSelected = true;
+      tsql.Hardcoded = true;
+      tsql.Content = "* Code des AutoCreators aus Aktivenplaner *";
+      Templates.Add(tsql);
+      BCTemplate tcs = new BCTemplate("AP-CS");
+      tcs.IsSelected = true;
+      tcs.Hardcoded = true;
+      tcs.Content = "* Code des AutoCreators aus Aktivenplaner *";
+      Templates.Add(tcs);
+      BCTemplate tphp = new BCTemplate("AP-PHP");
+      tphp.IsSelected = true;
+      tphp.Hardcoded = true;
+      tphp.Content = "* Code des AutoCreators aus Aktivenplaner *";
+      Templates.Add(tphp);
+      BCTemplate thtml = new BCTemplate("AP-HTML");
+      thtml.IsSelected = true;
+      thtml.Hardcoded = true;
+      thtml.Content = "* Code des AutoCreators aus Aktivenplaner *";
+      Templates.Add(thtml);
+      //BCTemplate trds = new BCTemplate("AP-RandDS");
+      //trds.IsSelected = true;
+      //trds.Hardcoded = true;
+      //trds.Content = "* Code des AutoCreators aus Aktivenplaner *";
+      //Templates.Add(trds);
     }
     private static void LoadDataTypes() {
       _dataTypes = new ObservableCollection<DataType>();
@@ -225,6 +252,8 @@ namespace BaseCreator_Core.Core {
       return true;
     }
     public static bool Save(BCTemplate template) {
+      if (template.Darstellung.Contains("AP-"))
+        return true;
       try {
         string[] fileInfo = FileManager.splitFilePath(template.CurrentFilePath);
         List<string> cont = new List<string>();
@@ -265,59 +294,8 @@ namespace BaseCreator_Core.Core {
     }
     public static bool Save(BCFile file) {
       try {
-        List<List<string>> content = new List<List<string>>();
-        // Header
-        List<string> header = new List<string>();
-        header.Add("Datenbank");
-        header.Add("Tabelle");
-        header.Add("TabelleKuerzel");
-        header.Add("Attribut");
-        header.Add("Art");
-        header.Add("Verweis");
-        header.Add("NotNull");
-        header.Add("AutoIncrement");
-        header.Add("PrimaryKey");
-        header.Add("defaultValue");
-        header.Add("MakeUnique");
-        header.Add("Kommentar");
-        content.Add(header);
-        // Sort before saving
-        int h = 0;
-        while (h < 1000) {
-          foreach (BCDatabase db in file.Databases) {
-            foreach (BCTable tab in db.Tables) {
-              tab.RefreshDependencyLevel();
-            }
-          }
-          h++;
-        }
-        file.SortDatabases();
-        foreach (BCDatabase db in file.Databases) {
-          db.SortTables();
-        }
-        // Zeilen erstellen
-        foreach (BCDatabase db in file.Databases) {
-          foreach (BCTable tab in db.Tables) {
-            foreach (BCColumn col in tab.Columns) {
-              List<string> row = new List<string>();
-              row.Add("" + db.Darstellung);
-              row.Add("" + tab.Darstellung);
-              row.Add("" + tab.Kuerzel);
-              row.Add("" + col.Darstellung);
-              row.Add("" + col.DataType?.Darstellung);
-              row.Add("" + col.Verweis);
-              row.Add("" + (col.NotNull ? "x" : ""));
-              row.Add("" + (col.AutoIncrement ? "x" : ""));
-              row.Add("" + (col.PrimaryKey ? "x" : ""));
-              row.Add("" + col.Default);
-              row.Add("" + col.MakeUnique);
-              row.Add("" + col.Kommentar);
-              content.Add(row);
-            }
-          }
-        }
         // Datei speichern
-        bool success = CSVImport.Save(file.FilePath, content);
+        bool success = CSVImport.Save(file.FilePath, GetDList(file));
         // Dirty-Flag ruecksetzen
         if (success) {
           file.Dirty = false;
@@ -335,7 +313,7 @@ namespace BaseCreator_Core.Core {
       }
       catch (Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.CreationError, "BC_Core", "Save"
-          , "Die Datei konnte nicht gespeichert werden.", "281");
+          , "Die Datei konnte nicht gespeichert werden.", "316");
         return false;
       }
     }
@@ -763,6 +741,8 @@ namespace BaseCreator_Core.Core {
 
     #region creation
     public static bool CreateFileTemplate(BCFile file, BCTemplate template) {
+      if (template.Hardcoded)
+        return APAC.CreateResult(GetDList(file), file.FilePath, template.Darstellung);
       return Creator.Create(file, template);
     }
     public static bool CreateFilesTemplates(List<BCFile> files, List<BCTemplate> templates) {
@@ -850,6 +830,112 @@ namespace BaseCreator_Core.Core {
       cDatenstatus.Kommentar = "Datenstatus des Eintrages";
       ret.Add(cDatenstatus);
       return ret;
+    }
+    public static List<List<string>> GetDList(BCFile file) {
+      try {
+        List<List<string>> content = new List<List<string>>();
+        // Header
+        List<string> header = new List<string>();
+        header.Add("Datenbank");
+        header.Add("Tabelle");
+        header.Add("TabelleKuerzel");
+        header.Add("Attribut");
+        header.Add("Art");
+        header.Add("Verweis");
+        header.Add("NotNull");
+        header.Add("AutoIncrement");
+        header.Add("PrimaryKey");
+        header.Add("defaultValue");
+        header.Add("MakeUnique");
+        header.Add("Kommentar");
+        content.Add(header);
+        // Sort before saving
+        int h = 0;
+        while (h < 1000) {
+          foreach (BCDatabase db in file.Databases) {
+            foreach (BCTable tab in db.Tables) {
+              tab.RefreshDependencyLevel();
+            }
+          }
+          h++;
+        }
+        file.SortDatabases();
+        foreach (BCDatabase db in file.Databases) {
+          db.SortTables();
+        }
+        // Zeilen erstellen
+        foreach (BCDatabase db in file.Databases) {
+          foreach (BCTable tab in db.Tables) {
+            foreach (BCColumn col in tab.Columns) {
+              List<string> row = new List<string>();
+              row.Add("" + db.Darstellung);
+              row.Add("" + tab.Darstellung);
+              row.Add("" + tab.Kuerzel);
+              row.Add("" + col.Darstellung);
+              row.Add("" + col.DataType?.Darstellung);
+              row.Add("" + col.Verweis);
+              row.Add("" + (col.NotNull ? "x" : ""));
+              row.Add("" + (col.AutoIncrement ? "x" : ""));
+              row.Add("" + (col.PrimaryKey ? "x" : ""));
+              row.Add("" + col.Default);
+              row.Add("" + col.MakeUnique);
+              row.Add("" + col.Kommentar);
+              content.Add(row);
+            }
+          }
+        }
+        return content;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.CreationError, "BC_Core", "GetContent"
+          , "Die Datei konnte nicht in eine List<List<string>> umgewandelt werden.", "889");
+        return null;
+      }
+    }
+    public static List<List<List<string>>> GetTList(BCFile file) {
+      try {
+        List<List<List<string>>> ret = new List<List<List<string>>>();
+        List<List<string>> content = new List<List<string>>();
+        // Sort before saving
+        int h = 0;
+        while (h < 1000) {
+          foreach (BCDatabase db in file.Databases) {
+            foreach (BCTable tab in db.Tables) {
+              tab.RefreshDependencyLevel();
+            }
+          }
+          h++;
+        }
+        file.SortDatabases();
+        foreach (BCDatabase db in file.Databases) {
+          db.SortTables();
+        }
+        // Zeilen erstellen
+        foreach (BCDatabase db in file.Databases) {
+          foreach (BCTable tab in db.Tables) {
+            foreach (BCColumn col in tab.Columns) {
+              List<string> row = new List<string>();
+              row.Add("" + db.Darstellung);
+              row.Add("" + tab.Darstellung);
+              row.Add("" + tab.Kuerzel);
+              row.Add("" + col.Darstellung);
+              row.Add("" + col.DataType?.Darstellung);
+              row.Add("" + col.Verweis);
+              row.Add("" + (col.NotNull ? "x" : ""));
+              row.Add("" + (col.AutoIncrement ? "x" : ""));
+              row.Add("" + (col.PrimaryKey ? "x" : ""));
+              row.Add("" + col.Default);
+              row.Add("" + col.MakeUnique);
+              row.Add("" + col.Kommentar);
+              content.Add(row);
+            }
+          }
+        }
+        return ret;
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.CreationError, "BC_Core", "GetContent"
+          , "Die Datei konnte nicht in eine List<List<string>> umgewandelt werden.", "889");
+        return null;
+      }
     }
     #endregion helper
 

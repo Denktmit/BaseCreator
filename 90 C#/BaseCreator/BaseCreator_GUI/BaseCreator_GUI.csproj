@@ -119,6 +119,10 @@
       <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
       <Name>BaseCreator_Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VDUtils\VDUtils.csproj">
+      <Project>{8c3412c9-56d5-4bd3-b4d8-aa43a43f80e1}</Project>
+      <Name>VDUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
@@ -150,7 +154,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)..\_Combined\"
 copy /N "$(TargetDir)$(TargetFileName).config" "$(SolutionDir)..\_Combined\"
-copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"
-copy /N "$(TargetDir)$(TargetFileName).config" "D:\Playground\BaseCreator\"</PostBuildEvent>
+:: copy /Y "$(TargetDir)$(TargetFileName)" "D:\Playground\BaseCreator\"
+:: copy /N "$(TargetDir)$(TargetFileName).config" "D:\Playground\BaseCreator\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

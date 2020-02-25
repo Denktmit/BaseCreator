@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Reflection;
-using BaseCreator_Core.Helper;
-using BaseCreator_GUI.Helper;
+using VDUtils.Helper;
 
 namespace BaseCreator_GUI.Helper.Commands {
 

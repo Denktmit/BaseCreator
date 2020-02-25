@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace BaseCreator_Core.Helper {
+namespace VDUtils.Helper {
 
   /// <summary>
   /// Provides a static variable about what should be printed to the console.
