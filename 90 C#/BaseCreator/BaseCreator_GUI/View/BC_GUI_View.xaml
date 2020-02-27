@@ -155,7 +155,6 @@
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
                   <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Darstellung}"
-                            IsEnabled="{Binding Dirty,Converter={StaticResource ibc}}"
                             HorizontalAlignment="Stretch"/>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>

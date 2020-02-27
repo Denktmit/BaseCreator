@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Security;
-using BaseCreator_Core.Core;
-using BaseCreator_Core.Helper;
 using VDUtils.Helper;
 
-namespace BaseCreator_Core.Model {
+namespace BaseCreator_Model.Model {
 
   public class BCColumn : _BCClass, IComparable, IEquatable<BCColumn> {
 
@@ -129,7 +127,7 @@ namespace BaseCreator_Core.Model {
     public BCColumn(BCTable table, string darstellung) : base(darstellung) {
       // set properties
       _table = table;
-      _dataType = BC_Core.GetDataType("Zahl");
+      _dataType = DataType.GetDataType("Zahl");
       _verweis = "-";
       _default = "";
       _notNull = false;

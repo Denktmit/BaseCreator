@@ -1,11 +1,5 @@
-﻿using BaseCreator_Core.Helper;
-using BaseCreator_Core.Model;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using BaseCreator_Model.Model;
 
 namespace BaseCreator_Console {
 

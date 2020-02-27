@@ -24,6 +24,10 @@ namespace AP_Extension.AP {
         return _tabellen;
       }
     }
+    public string CSV0 {
+      get { return DBName; }
+      set { DBName = value; }
+    }
     #endregion fields and properties
 
     #region ViewModels
@@ -35,6 +39,7 @@ namespace AP_Extension.AP {
     #region constructors
     public CSV_Datenbank(string name) {
       // set properties
+      _dBName = name;
       // set viewmodels
       // load commands
       // load gui-texts

@@ -24,6 +24,9 @@ namespace AP_Extension.AP {
     private int m_Idx;
 
     #region Konstruktor
+    public CSV_Spalte(string attribut) {
+      Attribut = attribut;
+    }
     public CSV_Spalte(int idx, string tableName, string att, string art, string gro, bool pri, bool not, bool aut, string def, string con, string fkt, string ond, string onu, string kom, string mak) {
       m_Idx = idx;
       m_tabelle = tableName;
@@ -63,6 +66,10 @@ namespace AP_Extension.AP {
     public string MakeUnique { get => m_MakeUnique; set => m_MakeUnique = value; }
     public bool ReferencesOtherTable { get { return IsClassReference(); } }
     public int Idx { get => m_Idx; set => m_Idx = value; }
+    public string CSV3 {
+      get { return Attribut; }
+      set { Attribut = value; }
+    }
     #endregion Properties
 
     #region class-methods

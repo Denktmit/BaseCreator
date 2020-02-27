@@ -1,7 +1,7 @@
 ﻿using System;
 using VDUtils.Helper;
 
-namespace BaseCreator_Core.Model {
+namespace BaseCreator_Model.Model {
 
   public abstract class _BCClass : ModelBase {
 

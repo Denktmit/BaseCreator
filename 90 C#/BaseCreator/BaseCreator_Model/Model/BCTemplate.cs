@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Security;
-using BaseCreator_Core.Core;
-using BaseCreator_Core.Helper;
 using VDUtils.Helper;
 
-namespace BaseCreator_Core.Model {
+namespace BaseCreator_Model.Model {
 
   public class BCTemplate : _BCClass {
 
@@ -89,7 +87,7 @@ namespace BaseCreator_Core.Model {
       _filePath = filePath;
       _content = "";
       _bezeichnung = bezeichnung;
-      _target = BC_Core.GetTemplateTarget("Keins");
+      _target = TemplateTarget.GetTemplateTarget("Keins");
       _hardcoded = false;
       // set viewmodels
       // load commands

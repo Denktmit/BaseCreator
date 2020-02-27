@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AP_Extension.AP;
+using BaseCreator_Model.Model;
 using VDUtils.Helper;
 
 namespace AP_Extension {
@@ -34,7 +35,31 @@ namespace AP_Extension {
           default:
             return false;
         }
-      } catch(Exception ex) {
+      } catch (Exception ex) {
+        ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "APAC", "CreateResult"
+          , "Fehler beim Erstellen der AP-Dateien.", "39");
+        return false;
+      }
+    }
+    public static bool CreateResult(BCFile file, string function) {
+      try {
+        if (AC.FilePath != file.FilePath)
+          AC.ImportData(file);
+        switch (function) {
+          case "AP-SQL":
+            return AC.CreateSQL();
+          case "AP-CS":
+            return AC.CreateCS();
+          case "AP-PHP":
+            return AC.CreatePHP();
+          case "AP-HTML":
+            return AC.CreateHTML();
+          case "AP-RandDS":
+            return AC.CreateRandDS();
+          default:
+            return false;
+        }
+      } catch (Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "APAC", "CreateResult"
           , "Fehler beim Erstellen der AP-Dateien.", "39");
         return false;

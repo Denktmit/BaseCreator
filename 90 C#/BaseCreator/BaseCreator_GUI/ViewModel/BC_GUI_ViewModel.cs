@@ -1,9 +1,9 @@
 ﻿using BaseCreator_Core.Core;
-using BaseCreator_Core.Helper;
-using BaseCreator_Core.Model;
+using BaseCreator_Model.Model;
 using BaseCreator_GUI.Helper.Commands;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Windows;
@@ -309,7 +309,25 @@ namespace BaseCreator_GUI.ViewModel {
       Console.WriteLine("DEBUG");
     }
     private void Btn_CreateResults() {
-      MessageBox.Show("ToDo: Btn_CreateResults", "ToDo", MessageBoxButton.OK);
+      try {
+        // Files
+        List<BCFile> files = new List<BCFile>();
+        foreach(BCFile f in Files) {
+          if (f.IsSelected)
+            files.Add(f);
+        }
+        // Templates
+        List<BCTemplate> templates = new List<BCTemplate>();
+        foreach(BCTemplate t in Templates) {
+          if (t.IsSelected)
+            templates.Add(t);
+        }
+        // Create results
+        BC_Core.CreateFilesTemplates(files, templates, true);
+      } catch(Exception ex) {
+        Console.WriteLine("EXCEPTION: " + ex);
+        MessageBox.Show("Es ist ein Fehler beim Erstellen der Ergebnisse aufgetreten.\n"+ex.Message, "Fehler", MessageBoxButton.OK);
+      }
     }
     private void Btn_Import() {
       if (!String.IsNullOrWhiteSpace(NewDateiPfad)) {

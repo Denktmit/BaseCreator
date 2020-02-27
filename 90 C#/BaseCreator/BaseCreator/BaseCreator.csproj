@@ -54,6 +54,10 @@
       <Project>{1bead612-8342-47d0-95ff-3fadf19160ec}</Project>
       <Name>BaseCreator_Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BaseCreator_Model\BaseCreator_Model.csproj">
+      <Project>{1add17b4-625e-4bcc-98cb-1c55779476bb}</Project>
+      <Name>BaseCreator_Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

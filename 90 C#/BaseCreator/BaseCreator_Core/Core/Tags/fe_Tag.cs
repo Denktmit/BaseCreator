@@ -1,5 +1,4 @@
-﻿using BaseCreator_Core.Helper;
-using BaseCreator_Core.Model;
+﻿using BaseCreator_Model.Model;
 using System;
 using System.Security;
 using VDUtils.Helper;

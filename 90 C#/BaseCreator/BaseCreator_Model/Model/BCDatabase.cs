@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Security;
 using VDUtils.Helper;
 
-namespace BaseCreator_Core.Model {
+namespace BaseCreator_Model.Model {
 
   public class BCDatabase : _BCClass, IComparable, IEquatable<BCDatabase> {
 

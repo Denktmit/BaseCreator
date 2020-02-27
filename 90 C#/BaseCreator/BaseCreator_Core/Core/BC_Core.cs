@@ -9,6 +9,7 @@ using BaseCreator_Core.Model;
 using BaseCreator_Core.Helper;
 using AP_Extension;
 using VDUtils.Helper;
+using BaseCreator_Model.Model;
 
 namespace BaseCreator_Core.Core {
 
@@ -116,30 +117,13 @@ namespace BaseCreator_Core.Core {
     }
     private static void LoadDataTypes() {
       _dataTypes = new ObservableCollection<DataType>();
-      _dataTypes.Add(new DataType("Zahl", "INT", "int", "n", "-"));
-      _dataTypes.Add(new DataType("Kommazahl", "DECIMAL(10,2)", "double", "f", "10,2"));
-      _dataTypes.Add(new DataType("Text(1)", "NVARCHAR(1)", "string", "sz", "1"));
-      _dataTypes.Add(new DataType("Text(5)", "NVARCHAR(5)", "string", "sz", "5"));
-      _dataTypes.Add(new DataType("Text(25)", "NVARCHAR(25)", "string", "sz", "25"));
-      _dataTypes.Add(new DataType("Text(50)", "NVARCHAR(50)", "string", "sz", "50"));
-      _dataTypes.Add(new DataType("Text(100)", "NVARCHAR(100)", "string", "sz", "100"));
-      _dataTypes.Add(new DataType("Text(500)", "NVARCHAR(500)", "string", "sz", "500"));
-      _dataTypes.Add(new DataType("Text(1000)", "NVARCHAR(1000)", "string", "sz", "1000"));
-      _dataTypes.Add(new DataType("Text(5000)", "NVARCHAR(5000)", "string", "sz", "5000"));
-      _dataTypes.Add(new DataType("Text(10000)", "NVARCHAR(10000)", "string", "sz", "10000"));
-      _dataTypes.Add(new DataType("Zeitpunkt", "DATETIME", "DateTime", "dt", "-"));
-      _dataTypes.Add(new DataType("Datum", "DATE", "DateTime", "d", "-"));
-      _dataTypes.Add(new DataType("Uhrzeit", "TIME", "DateTime", "t", "-"));
-      _dataTypes.Add(new DataType("Wahrheitswert", "BOOL", "bool", "b", "-"));
-      _dataTypes.Add(new DataType("Verweis", "x", "x", "i", "-"));
+      foreach (DataType dt in DataType.DataTypes)
+        _dataTypes.Add(dt);
     }
     private static void LoadTemplateTargets() {
       _templateTargets = new ObservableCollection<TemplateTarget>();
-      _templateTargets.Add(new TemplateTarget("Keins", "-"));
-      _templateTargets.Add(new TemplateTarget("File", "BCFile"));
-      _templateTargets.Add(new TemplateTarget("Database", "BCDatabase"));
-      _templateTargets.Add(new TemplateTarget("Table", "BCTable"));
-      _templateTargets.Add(new TemplateTarget("Column", "BCColumn"));
+      foreach (TemplateTarget tt in TemplateTarget.TemplateTargets)
+        _templateTargets.Add(tt);
     }
     public static bool ImportFile(string filePath) {
       try {
@@ -742,7 +726,7 @@ namespace BaseCreator_Core.Core {
     #region creation
     public static bool CreateFileTemplate(BCFile file, BCTemplate template) {
       if (template.Hardcoded)
-        return APAC.CreateResult(GetDList(file), file.FilePath, template.Darstellung);
+        return APAC.CreateResult(file, template.Darstellung);
       return Creator.Create(file, template);
     }
     public static bool CreateFilesTemplates(List<BCFile> files, List<BCTemplate> templates) {

@@ -47,21 +47,18 @@
     <Compile Include="Core\Tags\fe_Tag.cs" />
     <Compile Include="Core\Tags\_Tag.cs" />
     <Compile Include="Helper\_placeholder.cs" />
-    <Compile Include="Model\BCColumn.cs" />
-    <Compile Include="Model\BCDatabase.cs" />
-    <Compile Include="Model\BCFile.cs" />
-    <Compile Include="Model\BCTable.cs" />
-    <Compile Include="Model\BCTemplate.cs" />
     <Compile Include="Core\BC_Core.cs" />
-    <Compile Include="Model\DataType.cs" />
-    <Compile Include="Model\TemplateTarget.cs" />
-    <Compile Include="Model\_BCClass.cs" />
+    <Compile Include="Model\_placeholder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AP_Extension\AP_Extension.csproj">
       <Project>{1fa97067-c7ed-40d4-aa66-885b7cc5b0ec}</Project>
       <Name>AP_Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BaseCreator_Model\BaseCreator_Model.csproj">
+      <Project>{1add17b4-625e-4bcc-98cb-1c55779476bb}</Project>
+      <Name>BaseCreator_Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\VDUtils\VDUtils.csproj">
       <Project>{8c3412c9-56d5-4bd3-b4d8-aa43a43f80e1}</Project>

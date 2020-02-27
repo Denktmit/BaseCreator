@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaseCreator_Model.Model;
+using System;
 using System.Collections.Generic;
 using VDUtils.Helper;
 
@@ -64,8 +65,8 @@ namespace AP_Extension.AP {
     }
     public bool CreateSQL() {
       try {
-        CSQL = new Creator_SQL(this);
-        CSQL.run();
+//        CSQL = new Creator_SQL(this);
+//        CSQL.run();
         return true;
       } catch(Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateSQL"
@@ -75,8 +76,8 @@ namespace AP_Extension.AP {
     }
     public bool CreateCS() {
       try {
-        CCS = new Creator_CS(this);
-        CCS.run();
+//        CCS = new Creator_CS(this);
+//        CCS.run();
         return true;
       } catch (Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateCS"
@@ -86,8 +87,8 @@ namespace AP_Extension.AP {
     }
     public bool CreatePHP() {
       try {
-        CPHP = new Creator_PHP(this);
-        CPHP.run();
+//        CPHP = new Creator_PHP(this);
+//        CPHP.run();
         return true;
       } catch (Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreatePHP"
@@ -97,8 +98,8 @@ namespace AP_Extension.AP {
     }
     public bool CreateHTML() {
       try {
-        CHTML = new Creator_HTML(this);
-        CHTML.run();
+//        CHTML = new Creator_HTML(this);
+//        CHTML.run();
         return true;
       } catch (Exception ex) {
         ErrorHandler.CreateErrorException(ex, ErrorType.AutoCreateError, "AutoCreator", "CreateHTML"
@@ -380,7 +381,7 @@ namespace AP_Extension.AP {
       }
       return null;
     }
-    public CSV_Tabelle GetTabelle(CSV_Datenbank db, string tabname, string tabtoken = "nA", bool createIfNull) {
+    public CSV_Tabelle GetTabelle(CSV_Datenbank db, string tabname, string tabtoken, bool createIfNull) {
       foreach (CSV_Tabelle tab in db.Tabellen) {
         if (tab.DataName == tabname)
           return tab;
@@ -608,10 +609,16 @@ namespace AP_Extension.AP {
       return ret;
     }
     public List<CSV_Tabelle> BCListToClassLists(List<List<string>> dList) {
+      List<CSV_Tabelle> ret = new List<CSV_Tabelle>();
+      foreach(CSV_Datenbank db in BCListToDBList(dList)) {
+        ret.AddRange(db.Tabellen);
+      }
+      return ret;
+    }
+    public List<CSV_Datenbank> BCListToDBList(List<List<string>> dList) {
       Console.WriteLine("-------------------------");
-      Console.WriteLine(" + BCListToClassLists(...)");
+      Console.WriteLine(" + BCListToDBList(...)");
       Dbs = new List<CSV_Datenbank>();
-      DbTables = new List<CSV_Tabelle>();
       List<string> uniqueKuerzel = new List<string>();
       // CSV-Tabelle einlesen
       if (dList == null) {
@@ -625,17 +632,69 @@ namespace AP_Extension.AP {
         throw new Exception(errMsg);
       }
       // Tabellen durchlaufen
+      foreach (List<string> row in dList) {
+        string r = "";
+        foreach (string f in row) {
+          r += f + " ; ";
+        }
+        Console.WriteLine(r);
+        CSV_Datenbank db = GetDB(Dbs, row[0], true);
+        CSV_Tabelle tab = GetTabelle(db.Tabellen, row[1], row[2], true);
 
 
 
-      // ...
+        // ...
 
-      
-      return DbTables;
+
+
+
+      }
+      return Dbs;
+    }
+    public CSV_Datenbank GetDB(List<CSV_Datenbank> liste, string dbname, bool create) {
+      foreach (CSV_Datenbank db in liste) {
+        if (db.DBName == dbname)
+          return db;
+      }
+      if (create) {
+        CSV_Datenbank dbret = new CSV_Datenbank(dbname);
+        liste.Add(dbret);
+        return dbret;
+      }
+      return null;
+    }
+    public CSV_Tabelle GetTabelle(List<CSV_Tabelle> liste, string tabname, string tabtoken, bool create) {
+      foreach (CSV_Tabelle o in liste) {
+        if (o.DataName == tabname && o.TableKuerzel == tabtoken)
+          return o;
+      }
+      if (create) {
+        CSV_Tabelle ret = new CSV_Tabelle(tabname, tabtoken);
+        liste.Add(ret);
+        return ret;
+      }
+      return null;
+    }
+    public CSV_Spalte GetSpalte(List<CSV_Spalte> liste, string colname, bool create) {
+      foreach (CSV_Spalte o in liste) {
+        if (o.Attribut == colname)
+          return o;
+      }
+      if (create) {
+        CSV_Spalte dbret = new CSV_Spalte(colname);
+        liste.Add(dbret);
+        return dbret;
+      }
+      return null;
     }
     public void ImportData(List<List<string>> data, string filePath) {
       FilePath = filePath;
       DbTables = BCListToClassLists(data);
+    }
+    public void ImportData(BCFile file) {
+      FilePath = file.FilePath;
+      // ...
+      // DBTables = ...
     }
     #endregion converter_methods
 

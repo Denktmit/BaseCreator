@@ -1,4 +1,4 @@
-﻿using BaseCreator_Core.Model;
+﻿using BaseCreator_Model.Model;
 using System;
 
 namespace BaseCreator_Core.Core {

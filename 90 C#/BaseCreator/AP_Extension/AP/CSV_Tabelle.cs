@@ -30,6 +30,14 @@ namespace AP_Extension.AP {
       set { m_Columns = value; }
     }
     public int ClassDependency { get { return _classDependency; } set { _classDependency = value; } }
+    public string CSV1 {
+      get { return DataName; }
+      set { DataName = value; }
+    }
+    public string CSV2 {
+      get { return TableKuerzel; }
+      set { TableKuerzel = value; }
+    }
     #endregion Properties
 
     #region Konstruktor

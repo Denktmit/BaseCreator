@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AP_Extension", "AP_Extensio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VDUtils", "VDUtils\VDUtils.csproj", "{8C3412C9-56D5-4BD3-B4D8-AA43A43F80E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCreator_Model", "BaseCreator_Model\BaseCreator_Model.csproj", "{1ADD17B4-625E-4BCC-98CB-1C55779476BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8C3412C9-56D5-4BD3-B4D8-AA43A43F80E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C3412C9-56D5-4BD3-B4D8-AA43A43F80E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C3412C9-56D5-4BD3-B4D8-AA43A43F80E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADD17B4-625E-4BCC-98CB-1C55779476BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADD17B4-625E-4BCC-98CB-1C55779476BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADD17B4-625E-4BCC-98CB-1C55779476BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADD17B4-625E-4BCC-98CB-1C55779476BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
