@@ -8,6 +8,7 @@ namespace AP_Extension.AP {
   public class AutoCreator {
 
     #region fields
+    private List<BCDatabase> _dBs;
     private List<string> _errors;
     //private DBConnection _conn;
     private List<CSV_Datenbank> _dbs;
@@ -21,9 +22,11 @@ namespace AP_Extension.AP {
     private Creator_HTML _chtml;
     private Creator_RandDS _crds;
     private string _filePath;
+    private bool _modusBC;
     #endregion fields
 
     #region properties
+    public List<BCDatabase> DBs { get { return _dBs; } }
     public List<string> Errors { get { return _errors; } set { _errors = value; } }
     //public DBConnection Conn { get { return _conn; } set { _conn = value; } }
     public List<CSV_Datenbank> Dbs { get { return _dbs; } set { _dbs = value; } }
@@ -39,6 +42,10 @@ namespace AP_Extension.AP {
     public string FilePath {
       get { return _filePath; }
       set { _filePath = value; }
+    }
+    public bool ModusBC {
+      get { return _modusBC; }
+      set { _modusBC = value; }
     }
     #endregion properties
 
@@ -690,11 +697,15 @@ namespace AP_Extension.AP {
     public void ImportData(List<List<string>> data, string filePath) {
       FilePath = filePath;
       DbTables = BCListToClassLists(data);
+      ModusBC = false;
     }
     public void ImportData(BCFile file) {
       FilePath = file.FilePath;
-      // ...
-      // DBTables = ...
+      _dBs = new List<BCDatabase>();
+      foreach(BCDatabase db in file.Databases) {
+        _dBs.Add(db);
+      }
+      ModusBC = true;
     }
     #endregion converter_methods
 
